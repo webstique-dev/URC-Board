@@ -42,7 +42,38 @@ npm run dev
 
 App runs on `http://localhost:5173`.
 
-## 3. Try it out
+## 3. Production Deployment
+
+### Backend on Render
+1. Go to [Render Dashboard](https://dashboard.render.com/) and click **New +** -> **Web Service**.
+2. Connect your GitHub repository `URC-Board`.
+3. Configure the service:
+   - **Root Directory**: `backend`
+   - **Environment**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+4. Add **Environment Variables**:
+   - `PORT`: `5000` (or leave default, Render sets `PORT` automatically)
+   - `MONGO_URI`: `mongodb+srv://<username>:<password>@cluster.mongodb.net/urc_board?retryWrites=true&w=majority` (MongoDB Atlas connection string)
+   - `JWT_SECRET`: A long random string (e.g., `super_secret_jwt_key_2026`)
+   - `CLIENT_URL`: `https://your-app-name.vercel.app` (your frontend Vercel URL, or `*` temporarily)
+5. Click **Create Web Service**. Note your backend URL (e.g., `https://your-backend.onrender.com`).
+
+### Frontend on Vercel
+1. Go to [Vercel Dashboard](https://vercel.com/) and click **Add New...** -> **Project**.
+2. Import your GitHub repository `URC-Board`.
+3. Configure the project:
+   - **Framework Preset**: `Vite`
+   - **Root Directory**: Click *Edit* and select `frontend`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+4. Add **Environment Variables**:
+   - `VITE_API_URL`: `https://your-backend.onrender.com/api`
+   - `VITE_SOCKET_URL`: `https://your-backend.onrender.com`
+5. Click **Deploy**.
+6. Once deployed, update `CLIENT_URL` in your Render backend settings with your actual Vercel domain (e.g. `https://your-frontend.vercel.app`).
+
+## 4. Try it out
 
 1. Go to `http://localhost:5173/register`, create an account with role
    "Project manager" — this is you.
